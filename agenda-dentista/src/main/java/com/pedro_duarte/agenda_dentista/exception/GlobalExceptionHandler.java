@@ -2,6 +2,7 @@ package com.pedro_duarte.agenda_dentista.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -25,8 +26,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErroResponse(ex.getMessage()));
     }
 
+    // Captura recursos não encontrados (ex: agendamento inexistente)
     @ExceptionHandler(NotFoundResourceException.class)
     public ResponseEntity<ErroResponse> handleNotFoundResourceException(NotFoundResourceException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroResponse(ex.getMessage()));
+    }
+
+    // Captura falhas de autenticação (ex: credenciais inválidas)
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErroResponse> handleBadCredentialsException(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErroResponse("Email ou senha inválidos"));
     }
 }
