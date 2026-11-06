@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.FutureOrPresent;
-
 import lombok.Data;
 import java.time.LocalDateTime;
+import com.pedro_duarte.agenda_dentista.entity.StatusAgendamento;
 
 @Entity
 @Table(name = "agendamentos")
@@ -30,9 +30,10 @@ public class Agendamento {
     @Column(nullable = false)
     private LocalDateTime dataHora;
 
-    @NotBlank(message = "O status é obrigatório")
-    @Column(nullable = false)
-    private String status = "PENDENTE";
+    @NotNull(message = "O status é obrigatório")
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusAgendamento status = StatusAgendamento.PENDENTE;
 
     // O @Transient diz ao banco de dados para ignorar este campo
     @Transient

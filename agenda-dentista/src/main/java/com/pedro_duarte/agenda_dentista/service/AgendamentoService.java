@@ -4,6 +4,7 @@ import com.pedro_duarte.agenda_dentista.entity.Agendamento;
 import com.pedro_duarte.agenda_dentista.exception.NotFoundResourceException;
 import com.pedro_duarte.agenda_dentista.repository.AgendamentoRepository;
 import org.springframework.stereotype.Service;
+import com.pedro_duarte.agenda_dentista.entity.StatusAgendamento;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,7 +27,7 @@ public class AgendamentoService {
             throw new IllegalArgumentException("Já existe um agendamento para este horário exato.");
         }
 
-        agendamento.setStatus("PENDENTE");
+        agendamento.setStatus(StatusAgendamento.PENDENTE);
         return repository.save(agendamento);
     }
 
@@ -34,7 +35,7 @@ public class AgendamentoService {
         repository.deleteById(id);
     }
 
-    public Agendamento atualizarStatus(Long id, String novoStatus) {
+    public Agendamento atualizarStatus(Long id, StatusAgendamento novoStatus) {
         Agendamento agendamento = repository.findById(id)
                 .orElseThrow(() -> new NotFoundResourceException("Agendamento não encontrado"));
 

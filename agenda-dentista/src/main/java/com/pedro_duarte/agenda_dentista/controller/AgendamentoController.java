@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.pedro_duarte.agenda_dentista.entity.StatusAgendamento;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,7 +47,7 @@ public class AgendamentoController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<Agendamento> atualizarStatus(
         @PathVariable Long id, 
-        @RequestParam("status") String status) {
+        @RequestParam("status") StatusAgendamento status) {
         
         Agendamento atualizado = service.atualizarStatus(id, status);
         return ResponseEntity.ok(atualizado);
