@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.time.Instant;
@@ -14,7 +15,8 @@ import java.util.Date;
 public class TokenService {
 
     // Esta é a assinatura digital do seu servidor. Precisa ter mais de 32 caracteres.
-    private final String secret = "chave-secreta-super-segura-agenda-dentista-2026";
+    @Value("${api.security.token.secret}")
+    private String secret;
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
