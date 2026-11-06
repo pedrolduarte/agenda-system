@@ -1,6 +1,7 @@
 package com.pedro_duarte.agenda_dentista.service;
 
 import com.pedro_duarte.agenda_dentista.entity.Agendamento;
+import com.pedro_duarte.agenda_dentista.exception.NotFoundResourceException;
 import com.pedro_duarte.agenda_dentista.repository.AgendamentoRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class AgendamentoService {
 
     public Agendamento atualizarStatus(Long id, String novoStatus) {
         Agendamento agendamento = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+                .orElseThrow(() -> new NotFoundResourceException("Agendamento não encontrado"));
 
         agendamento.setStatus(novoStatus);
         return repository.save(agendamento);

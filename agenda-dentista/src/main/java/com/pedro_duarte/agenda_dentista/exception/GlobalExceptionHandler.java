@@ -6,9 +6,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Collections;
-import java.util.Map;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -26,5 +23,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErroResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErroResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(NotFoundResourceException.class)
+    public ResponseEntity<ErroResponse> handleNotFoundResourceException(NotFoundResourceException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroResponse(ex.getMessage()));
     }
 }
